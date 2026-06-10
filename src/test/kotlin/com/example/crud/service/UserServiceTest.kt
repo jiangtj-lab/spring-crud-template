@@ -113,12 +113,12 @@ class UserServiceTest {
             val request = CreateUserRequest("John Doe", "john@example.com", "A developer")
             org.mockito.Mockito.`when`(userRepository.existsByName(request.name)).thenReturn(false)
             org.mockito.Mockito.`when`(userRepository.existsByEmail(request.email)).thenReturn(false)
-            org.mockito.Mockito.`when`(userRepository.save(org.mockito.ArgumentMatchers.argThat { name == "John Doe" && email == "john@example.com" })).thenReturn(testUser)
+            org.mockito.Mockito.`when`(userRepository.save(org.mockito.ArgumentMatchers.argThat<User> { it.name == "John Doe" && it.email == "john@example.com" })).thenReturn(testUser)
 
             val result = userService.createUser(request)
 
             org.junit.jupiter.api.Assertions.assertEquals("John Doe", result.name)
-            org.mockito.Mockito.verify(userRepository).save(org.mockito.ArgumentMatchers.argThat { name == "John Doe" && email == "john@example.com" })
+            org.mockito.Mockito.verify(userRepository).save(org.mockito.ArgumentMatchers.argThat<User> { it.name == "John Doe" && it.email == "john@example.com" })
         }
 
         @Test
@@ -156,12 +156,12 @@ class UserServiceTest {
             org.mockito.Mockito.`when`(userRepository.findById(1L)).thenReturn(Optional.of(testUser))
             org.mockito.Mockito.`when`(userRepository.existsByName("Jane Doe")).thenReturn(false)
             org.mockito.Mockito.`when`(userRepository.existsByEmail("jane@example.com")).thenReturn(false)
-            org.mockito.Mockito.`when`(userRepository.save(org.mockito.ArgumentMatchers.argThat { name == "Jane Doe" && email == "jane@example.com" })).thenReturn(testUser)
+            org.mockito.Mockito.`when`(userRepository.save(org.mockito.ArgumentMatchers.argThat<User> { it.name == "Jane Doe" && it.email == "jane@example.com" })).thenReturn(testUser)
 
             val result = userService.updateUser(1L, request)
 
             org.junit.jupiter.api.Assertions.assertNotNull(result)
-            org.mockito.Mockito.verify(userRepository).save(org.mockito.ArgumentMatchers.argThat { name == "Jane Doe" && email == "jane@example.com" })
+            org.mockito.Mockito.verify(userRepository).save(org.mockito.ArgumentMatchers.argThat<User> { it.name == "Jane Doe" && it.email == "jane@example.com" })
         }
 
         @Test
