@@ -100,7 +100,7 @@ class UserControllerTest @Autowired constructor(
         @DisplayName("should create user successfully")
         fun shouldCreateUserSuccessfully() {
             val request = CreateUserRequest("John Doe", "john@example.com", "A developer")
-            org.mockito.Mockito.`when`(userService.createUser(org.mockito.ArgumentMatchers.any(CreateUserRequest::class.java)))
+            org.mockito.Mockito.`when`(userService.createUser(org.mockito.ArgumentMatchers.refEq(request)))
                 .thenReturn(testUserResponse)
 
             mockMvc.perform(
@@ -148,8 +148,9 @@ class UserControllerTest @Autowired constructor(
         @DisplayName("should update user successfully")
         fun shouldUpdateUserSuccessfully() {
             val request = UpdateUserRequest(name = "Jane Doe")
-            org.mockito.Mockito.`when`(userService.updateUser(org.mockito.Mockito.eq(1L), org.mockito.ArgumentMatchers.any(UpdateUserRequest::class.java)))
-                .thenReturn(testUserResponse.copy(name = "Jane Doe"))
+            val updatedResponse = testUserResponse.copy(name = "Jane Doe")
+            org.mockito.Mockito.`when`(userService.updateUser(org.mockito.Mockito.eq(1L), org.mockito.ArgumentMatchers.refEq(request)))
+                .thenReturn(updatedResponse)
 
             mockMvc.perform(
                 org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put("/api/users/1")
