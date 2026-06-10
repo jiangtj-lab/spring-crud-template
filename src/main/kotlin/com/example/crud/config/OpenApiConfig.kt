@@ -32,7 +32,10 @@ class OpenApiConfig {
             )
             .servers(
                 listOf(
-                    Server(url = "/", description = "Default Server")
+                    Server().apply {
+                        url = "/"
+                        description = "Default Server"
+                    }
                 )
             )
     }
