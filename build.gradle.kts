@@ -6,7 +6,6 @@ plugins {
     kotlin("jvm") version "1.9.23"
     kotlin("plugin.spring") version "1.9.23"
     kotlin("plugin.jpa") version "1.9.23"
-    kotlin("plugin.openapi") version "1.9.23"
 }
 
 group = "com.example"
